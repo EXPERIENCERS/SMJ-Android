@@ -2,6 +2,8 @@ package com.example.smj.ui.Boards.LivingTip;
 
 import android.net.Uri;
 
+import com.example.smj.data.entity.Member.MemberData;
+
 public class LivingTipPostData {
     private int id;
     private String category;
@@ -9,17 +11,19 @@ public class LivingTipPostData {
     private String contents;
     private String writer;
     private String[] date;
+    private String email;
     private String imageOne;
     private String imageTwo;
     private String imageThree;
 
-    public LivingTipPostData(int id, String category, String title, String contents, String writer, String[] date, String imageOne, String imageTwo, String imageThree) {
+    public LivingTipPostData(int id, String category, String title, String contents, String writer, String[] date, String email, String imageOne, String imageTwo, String imageThree) {
         this.id = id;
         this.category = category;
         this.title = title;
         this.contents = contents;
         this.writer = writer;
         this.date = date;
+        this.email = email;
         this.imageOne = imageOne;
         this.imageTwo = imageTwo;
         this.imageThree = imageThree;
@@ -95,5 +99,13 @@ public class LivingTipPostData {
 
     public void setImageThree(String imageThree) {
         this.imageThree = imageThree;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

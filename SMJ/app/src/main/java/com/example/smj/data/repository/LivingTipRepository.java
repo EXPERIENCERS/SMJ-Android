@@ -5,11 +5,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.smj.Manager.NetworkManager;
-import com.example.smj.data.entity.Comments.Entity_Comments;
 import com.example.smj.data.entity.board.Entity_board;
 import com.example.smj.data.entity.board.boardData;
 import com.example.smj.data.entity.board.boardPostData;
 import com.example.smj.domain.usecase.LivingTipUseCase;
+import com.example.smj.ui.Member.MyPageFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LivingTipRepository {
-    private List<boardData> livingTipList = new ArrayList<>();
+    private List<boardData> boardList = new ArrayList<>();
     private Entity_board entityBoard;
 
     public LivingTipRepository() {
@@ -33,9 +33,47 @@ public class LivingTipRepository {
             public void onResponse(Call<List<boardData>> call, Response<List<boardData>> response) {
                 if(response.isSuccessful()){
                     Log.d("살림 팁 게시판 데이터 GET 성공","살림 팁 게시판 데이터 GET 성공");
-                    livingTipList = response.body();
-                    livingTipUseCase.onSuccess(livingTipList);
-                    Log.d("살림 팁 게시판 데이터 GET 성공",Integer.toString(livingTipList.size()));
+                    boardList = response.body();
+                    livingTipUseCase.onSuccess(boardList);
+                    Log.d("살림 팁 게시판 데이터 GET 성공",Integer.toString(boardList.size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<boardData>> call, Throwable t) {
+                Log.d("살림 팁 게시판 데이터 GET 실패","살림 팁 게시판 데이터 GET 실패");
+            }
+        });
+    }
+
+    public void getMyData(String key, LivingTipUseCase livingTipUseCase){
+        Call <List<boardData>> call = entityBoard.getMyLivingTip(key);
+        call.enqueue(new Callback<List<boardData>>() {
+            @Override
+            public void onResponse(Call<List<boardData>> call, Response<List<boardData>> response) {
+                if(response.isSuccessful()){
+                    Log.d("포스트 매니저 데이터 GET 성공","포스트 매니저 데이터 GET 성공");
+                    boardList = response.body();
+                    livingTipUseCase.onPostManageSuccess(boardList);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<boardData>> call, Throwable t) {
+                Log.d("살림 팁 게시판 데이터 GET 실패","살림 팁 게시판 데이터 GET 실패");
+            }
+        });
+    }
+
+    public void getMyData(String key, LivingTipUseCase livingTipUseCase, MyPageFragment myPageFragment){
+        Call <List<boardData>> call = entityBoard.getMyLivingTip(key);
+        call.enqueue(new Callback<List<boardData>>() {
+            @Override
+            public void onResponse(Call<List<boardData>> call, Response<List<boardData>> response) {
+                if(response.isSuccessful()){
+                    Log.d("포스트 매니저 데이터 GET 성공","포스트 매니저 데이터 GET 성공");
+                    boardList = response.body();
+                    livingTipUseCase.onMyPageSuccess(boardList);
                 }
             }
 

@@ -20,6 +20,7 @@ import com.example.smj.Manager.JWTManager;
 import com.example.smj.R;
 import com.example.smj.domain.usecase.LivingTipUseCase;
 import com.example.smj.ui.Comments.LivingTip.LivingTipCommentActivity;
+import com.example.smj.ui.login.LoginActivity;
 
 public class LivingTipReadingActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class LivingTipReadingActivity extends AppCompatActivity {
     ImageView image1, image2, image3;
     String imageUri1, imageUri2, imageUri3;
     ImageView commentBtn;
+    String email;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,6 +67,7 @@ public class LivingTipReadingActivity extends AppCompatActivity {
         writer = getIntent.getExtras().getString("writer");
         date = getIntent.getExtras().getString("date");
         content = getIntent.getExtras().getString("content");
+        email = getIntent.getExtras().getString("email");
         imageUri1 = getIntent.getExtras().getString("image1");
         imageUri2 = getIntent.getExtras().getString("image2");
         imageUri3 = getIntent.getExtras().getString("image3");
@@ -81,7 +84,15 @@ public class LivingTipReadingActivity extends AppCompatActivity {
         dateView.setText(date);
         contentView.setText(content);
 
-        moreBtn.setOnClickListener(v -> showMoreView());
+        moreBtn.setEnabled(false);
+        moreBtn.setVisibility(View.INVISIBLE);
+
+        if(email.equals(LoginActivity.myEmail)) {
+            moreBtn.setEnabled(true);
+            moreBtn.setVisibility(View.VISIBLE);
+            moreBtn.setOnClickListener(v -> showMoreView());
+        }
+
 
         //수정버튼 클릭
         modifyBtn.setOnClickListener(new View.OnClickListener(){

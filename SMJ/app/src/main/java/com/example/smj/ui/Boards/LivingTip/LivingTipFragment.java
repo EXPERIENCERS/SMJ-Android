@@ -66,7 +66,7 @@ public class LivingTipFragment extends Fragment {
                     Log.d("살림 팁 텍스트 와처","살림 팁 텍스트 와처");
                     if(board.getTitle().contains(s) && board.getType().equals("LIVE")){
                         searchData.add(new LivingTipPostData(board.getId(), board.getCategory().getName(),board.getTitle(),board.getContent(),board.getMember().getNickName(),
-                                board.getCreatedAt(),board.getImageOne(),board.getImageTwo(),board.getImageThree()));
+                                board.getCreatedAt(),board.getMember().getEmail(),board.getImageOne(),board.getImageTwo(),board.getImageThree()));
                     }
                 }
 
@@ -93,14 +93,14 @@ public class LivingTipFragment extends Fragment {
     }
 
     public void onSuccess(List<boardData> list) {
-        data.clear();
+        //data.clear();
         boardList = list;
         data.clear();
         for(boardData board : list){
             Log.d("살림 팁 onSuccess","onSuccess");
             if(board.getType().equals("LIVE")){
                 data.add(new LivingTipPostData(board.getId(), board.getCategory().getName(),board.getTitle(),board.getContent(),board.getMember().getNickName(),
-                        board.getCreatedAt(),board.getImageOne(),board.getImageTwo(),board.getImageThree()));
+                        board.getCreatedAt(),board.getMember().getEmail(),board.getImageOne(),board.getImageTwo(),board.getImageThree()));
             }
         }
         recyclerView.setHasFixedSize(true);

@@ -60,7 +60,6 @@ public class LivingTipCommentActivity extends AppCompatActivity implements Comme
         livingTipMemberUseCase = new LivingTipMemberUseCase(this);
         upload = findViewById(R.id.living_tip_comment_write_btn);
         Intent intent = getIntent();
-        //defaultValue 변경해야함.
         boardId = intent.getIntExtra("id",9998);
         token =  JWTManager.getSharedPreference(this,getString(R.string.saved_JWT));
         content = findViewById(R.id.living_tip_comment_write_text);
@@ -70,7 +69,6 @@ public class LivingTipCommentActivity extends AppCompatActivity implements Comme
         upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //작성 후 리사이클러뷰에
                 if(content.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(),"댓글을 입력해주시기 바랍니다.",Toast.LENGTH_SHORT).show();
                 }
@@ -83,9 +81,8 @@ public class LivingTipCommentActivity extends AppCompatActivity implements Comme
                 }
             }
         });
-        //댓글 데이터 받아오기
+
         livingTipCommentsUseCase.getData(token,boardId);
-        //멤버 데이터 받아오기
         livingTipMemberUseCase.getData(token);
     }
 
@@ -108,7 +105,6 @@ public class LivingTipCommentActivity extends AppCompatActivity implements Comme
         adapter.refreshAdapter();
     }
 
-    //사용자 데이터 받기
     @Override
     public void onDataSuccess(List<MemberData> body){
         memberData.clear();

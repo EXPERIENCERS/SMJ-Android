@@ -16,6 +16,7 @@ import com.example.smj.Manager.JWTManager;
 import com.example.smj.R;
 import com.example.smj.data.entity.Member.MemberData;
 import com.example.smj.data.entity.board.boardData;
+import com.example.smj.domain.usecase.LivingTipUseCase;
 import com.example.smj.domain.usecase.MyPageMemberUseCase;
 import com.example.smj.ui.Setting.AppSetting;
 import com.example.smj.ui.manage.PostManageActivity;
@@ -40,6 +41,8 @@ public class MyPageFragment extends Fragment {
     private CircleImageView profileImage;
     private List<MemberData> memberData = new ArrayList<>();
     private MyPageMemberUseCase myPageMemberUseCase = new MyPageMemberUseCase(this);
+    private LivingTipUseCase livingTipUseCase = new LivingTipUseCase(this);
+    TextView myPostAlarm;
 
     public MyPageFragment() {
     }
@@ -51,12 +54,14 @@ public class MyPageFragment extends Fragment {
         userName = view.findViewById(R.id.userName);
         profileImage = view.findViewById(R.id.profileImage);
         key = JWTManager.getSharedPreference(getActivity(),getString(R.string.saved_JWT));
+        myPostAlarm = view.findViewById(R.id.mypost_alram);
 
         Bundle bundle = getArguments();
         if (bundle != null) {
             myEmail = bundle.getString("myEmail");
         }
         myPageMemberUseCase.getData(key);
+        livingTipUseCase.getMyData(key,this);
 
         letterBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,5 +122,9 @@ public class MyPageFragment extends Fragment {
                 userName.setText(data.getNickName());
             }
         }
+    }
+
+    public void onSuccess(List<boardData> list) {
+        myPostAlarm.setText(Integer.toString(list.size()));
     }
 }

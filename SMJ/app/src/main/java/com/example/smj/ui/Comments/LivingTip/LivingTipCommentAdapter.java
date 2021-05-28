@@ -18,6 +18,7 @@ import com.example.smj.Manager.JWTManager;
 import com.example.smj.R;
 import com.example.smj.data.entity.Member.MemberData;
 import com.example.smj.domain.usecase.LivingTipCommentsUseCase;
+import com.example.smj.ui.login.LoginActivity;
 
 import java.util.List;
 
@@ -31,13 +32,12 @@ public class LivingTipCommentAdapter extends RecyclerView.Adapter<LivingTipComme
     private int id;
     private Dialog moreView;
     private Button deleteBtn, modifyBtn;
-    private ImageButton moreBtn;
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView date;
         private TextView commenter;
         private TextView contents;
+        private ImageButton moreBtn;
 
         ViewHolder(View itemView){
             super(itemView);
@@ -80,20 +80,26 @@ public class LivingTipCommentAdapter extends RecyclerView.Adapter<LivingTipComme
         String[] getDate = commentData.get(position).getDate();
         String commenter = commentData.get(position).getCommenter();
         String contents = commentData.get(position).getContents();
-
+        String email = commentData.get(position).getEmail();
         String date = getDate[0]+"-"+getDate[1]+"-"+getDate[2] + " " + getDate[3]+":"+getDate[4];
 
         holder.date.setText(date);
         holder.commenter.setText(commenter);
         holder.contents.setText(contents);
+        holder.moreBtn.setEnabled(false);
+        holder.moreBtn.setVisibility(View.INVISIBLE);
 
+        if(email.equals(LoginActivity.myEmail)){
+            holder.moreBtn.setEnabled(true);
+            holder.moreBtn.setVisibility(View.VISIBLE);
 
-        moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moreView.show();
-            }
-        });
+            holder.moreBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    moreView.show();
+                }
+            });
+        }
 
         modifyBtn.setOnClickListener(new View.OnClickListener(){
             @Override

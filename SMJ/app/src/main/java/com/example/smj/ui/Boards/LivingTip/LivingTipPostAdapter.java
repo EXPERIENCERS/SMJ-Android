@@ -53,6 +53,7 @@ public class LivingTipPostAdapter extends RecyclerView.Adapter<LivingTipPostAdap
                         intent.putExtra("writer",postData.get(pos).getWriter());
                         intent.putExtra("date",postData.get(pos).getDate());
                         intent.putExtra("content",postData.get(pos).getContents());
+                        intent.putExtra("email",postData.get(pos).getEmail());
                         intent.putExtra("image1",postData.get(pos).getImageOne());
                         intent.putExtra("image2",postData.get(pos).getImageTwo());
                         intent.putExtra("image3",postData.get(pos).getImageThree());
@@ -86,7 +87,7 @@ public class LivingTipPostAdapter extends RecyclerView.Adapter<LivingTipPostAdap
 
         String []getDate = postData.get(position).getDate();
 
-        String date = getDate[0]+"년 "+getDate[1]+"월 "+getDate[2] + "일";
+        String date = getDate[0]+"-"+getDate[1]+"-"+getDate[2] + " " + getDate[3]+":"+getDate[4];
 
         holder.category.setText(category);
         holder.title.setText(title);
