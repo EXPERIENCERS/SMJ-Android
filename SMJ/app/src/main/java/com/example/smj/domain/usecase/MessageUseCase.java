@@ -1,15 +1,16 @@
 package com.example.smj.domain.usecase;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.example.smj.callback.MessageOnSuccess;
 import com.example.smj.data.entity.Message.MessageData;
 import com.example.smj.data.entity.Message.MessageManageData;
 import com.example.smj.data.entity.Message.MessagePostData;
 import com.example.smj.data.repository.MessageRepository;
-import com.example.smj.ui.message.MessageManagementActivity;
+import com.example.smj.ui.Message.MessageManagementActivity;
+import com.example.smj.ui.login.LoginActivity;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,12 +47,7 @@ public class MessageUseCase implements MessageOnSuccess {
         if(messageData != null){
             int getListSize = messageData.size();
             for(int i = 0; i<getListSize; i++){
-                //표시할 데이터 전처리
-                messageManageData.add(new MessageManageData(
-                        messageData.get(i).getSender(),
-                        messageData.get(i).getCreateAt(),
-                        messageData.get(i).getContent(),
-                        messageData.get(i).isCheck()));
+                //서버 수정 필요함
             }
             messageManagementActivity.onSuccess(messageManageData);
         }

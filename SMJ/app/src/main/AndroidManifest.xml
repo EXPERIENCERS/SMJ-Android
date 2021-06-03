@@ -30,7 +30,7 @@
         <activity android:name=".ui.main.MainActivity"/>
         <activity android:name=".ui.Boards.LivingTip.LivingTipReadingActivity"/>
         <activity android:name=".ui.Comments.LivingTip.LivingTipCommentActivity"/>
-        <activity android:name=".ui.message.MessageActivity"/>
+        <activity android:name=".ui.Message.MessageActivity"/>
         <activity android:name=".ui.Alarms.ScheduleAlarmListPopupActivity"
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".ui.Alarms.ScheduleAlarmPageActivity"/>
@@ -44,7 +44,7 @@
             android:theme="@android:style/Theme.Dialog"/>
         <activity android:name=".ui.Setting.AppSetting"/>
         <activity android:name=".ui.manage.PostManageActivity"/>
-        <activity android:name=".ui.message.MessageManagementActivity"/>
+        <activity android:name=".ui.Message.MessageManagementActivity"/>
         <activity android:name=".ui.Boards.Transaction.TransactionReadingActivity"/>
         <activity android:name=".ui.Boards.Transaction.TransactionModifyActivity"/>
         <activity android:name=".ui.Boards.Transaction.TransactionCreateActivity"/>

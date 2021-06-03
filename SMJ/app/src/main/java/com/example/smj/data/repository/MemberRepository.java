@@ -49,8 +49,10 @@ public class MemberRepository {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("데이터 전송 성공","성공");
-                Toast.makeText(context,"사용자 정보가 삭제됐습니다.",Toast.LENGTH_LONG).show();
+                if(response.isSuccessful()){
+                    Log.d("데이터 전송 성공","성공");
+                    Toast.makeText(context,"사용자 정보가 삭제됐습니다.",Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -65,8 +67,10 @@ public class MemberRepository {
         call.enqueue(new Callback<MemberData>() {
             @Override
             public void onResponse(Call<MemberData> call, Response<MemberData> response) {
-                Log.d("데이터 전송 성공","성공");
-                Toast.makeText(context,"사용자 정보가 수정됐습니다.",Toast.LENGTH_LONG).show();
+                if(response.isSuccessful()){
+                    Log.d("데이터 전송 성공","성공");
+                    Toast.makeText(context,"사용자 정보가 수정됐습니다.",Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override

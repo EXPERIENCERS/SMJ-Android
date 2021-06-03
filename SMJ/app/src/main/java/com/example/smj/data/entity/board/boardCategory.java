@@ -1,5 +1,7 @@
 package com.example.smj.data.entity.board;
 
+import com.google.gson.annotations.SerializedName;
+
 public class boardCategory {
     private int id;
     private String name;
@@ -24,6 +26,5 @@ public class boardCategory {
     public void setName(String name) {
         this.name = name;
     }
-
 
 }

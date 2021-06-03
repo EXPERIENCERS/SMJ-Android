@@ -3,7 +3,6 @@ package com.example.smj.ui.Member;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +14,11 @@ import androidx.fragment.app.Fragment;
 import com.example.smj.Manager.JWTManager;
 import com.example.smj.R;
 import com.example.smj.data.entity.Member.MemberData;
-import com.example.smj.data.entity.board.boardData;
 import com.example.smj.domain.usecase.MyPageMemberUseCase;
 import com.example.smj.ui.Setting.AppSetting;
 import com.example.smj.ui.manage.PostManageActivity;
-import com.example.smj.ui.message.MessageManagementActivity;
+import com.example.smj.ui.Message.MessageManagementActivity;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,4 +115,5 @@ public class MyPageFragment extends Fragment {
             }
         }
     }
+    //메세지 서버 수정 후 쪽지 알림 수정
 }

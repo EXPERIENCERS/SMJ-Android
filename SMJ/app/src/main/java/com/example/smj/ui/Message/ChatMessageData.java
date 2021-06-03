@@ -1,4 +1,4 @@
-package com.example.smj.ui.message;
+package com.example.smj.ui.Message;
 
 public class ChatMessageData {
     String id;

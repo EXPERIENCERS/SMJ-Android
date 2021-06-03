@@ -12,7 +12,7 @@
         android:layout_height="32dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/baseline_more_horiz_black_18dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/comment_date"
         app:layout_constraintEnd_toEndOf="@+id/comment_contents"
         app:layout_constraintTop_toTopOf="@+id/comment_date" />

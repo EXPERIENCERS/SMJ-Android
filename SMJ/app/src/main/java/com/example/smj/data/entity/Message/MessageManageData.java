@@ -1,47 +1,19 @@
 package com.example.smj.data.entity.Message;
 
+import java.util.List;
+
 public class MessageManageData {
-    private String nickName;
-    private String[] createAt;
-    private String content;
-    private boolean check;
+    private List<MessageData>data;
 
-    public MessageManageData(String nickName, String[] createAt, String content, boolean check) {
-        this.nickName = nickName;
-        this.createAt = createAt;
-        this.content = content;
-        this.check = check;
+    public MessageManageData(List<MessageData> data) {
+        this.data = data;
     }
 
-    public String getNickName() {
-        return nickName;
+    public List<MessageData> getData() {
+        return data;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String[] getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(String[] createAt) {
-        this.createAt = createAt;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public boolean isCheck() {
-        return check;
-    }
-
-    public void setCheck(boolean check) {
-        this.check = check;
+    public void setData(List<MessageData> data) {
+        this.data = data;
     }
 }

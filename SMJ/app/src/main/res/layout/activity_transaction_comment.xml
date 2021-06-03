@@ -93,12 +93,12 @@
         app:layout_constraintBottom_toBottomOf="@+id/transaction_comment_write_view"
         app:layout_constraintEnd_toEndOf="@+id/transaction_comment_write_view" />
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/transaction_write_reading_btn"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
+        app:backgroundTint="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/post_icon" />

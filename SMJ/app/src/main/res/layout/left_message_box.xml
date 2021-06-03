@@ -24,7 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:background="@color/orange"
-        android:textSize="18sp"
+        android:textSize="12sp"
+        android:padding="3dp"
         app:layout_constraintStart_toEndOf="@+id/left_box_triangle"
         app:layout_constraintTop_toTopOf="parent" />
 

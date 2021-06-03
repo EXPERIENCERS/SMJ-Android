@@ -48,9 +48,11 @@ public class TransactionRepository {
         call.enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.d("데이터 전송 성공","성공");
-                transactionUseCase.deleteSuccess();
-                Toast.makeText(context,"게시글이 삭제됐습니다.",Toast.LENGTH_LONG).show();
+                if(response.isSuccessful()){
+                    Log.d("데이터 전송 성공","성공");
+                    transactionUseCase.deleteSuccess();
+                    Toast.makeText(context,"게시글이 삭제됐습니다.",Toast.LENGTH_LONG).show();
+                }
             }
 
             @Override
@@ -87,9 +89,11 @@ public class TransactionRepository {
         call.enqueue(new Callback<boardData>() {
             @Override
             public void onResponse(Call<boardData> call, Response<boardData> response) {
-                Log.d("데이터 전송 성공","성공");
-                Toast.makeText(context,"게시글이 등록됐습니다.",Toast.LENGTH_LONG).show();
-                transactionUseCase.postSuccess();
+                if(response.isSuccessful()){
+                    Log.d("데이터 전송 성공","성공");
+                    Toast.makeText(context,"게시글이 등록됐습니다.",Toast.LENGTH_LONG).show();
+                    transactionUseCase.postSuccess();
+                }
             }
 
             @Override
