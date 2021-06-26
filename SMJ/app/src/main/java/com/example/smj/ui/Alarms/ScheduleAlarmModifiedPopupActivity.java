@@ -28,7 +28,6 @@ public class ScheduleAlarmModifiedPopupActivity extends Activity {
         cancel = findViewById(R.id.schedule_alarmmodified_popup_cancel);
         submit.setOnClickListener((view) ->{
             Intent intent = new Intent();
-            intent.putExtra("result", "Close Popup");
             setResult(RESULT_OK, intent);
             finish();
         });

@@ -46,7 +46,7 @@ public class ScheduleUseCase implements RetrofitOnSuccess, ScheduleOnSuccess {
     }
 
     /* PUT Alarm데이터 수정 */
-    public void changeData(Alarm alarm, String key, String id){
+    public void changeData(AlarmPostData alarm, String key, String id){
         scheduleRepository.putData(alarm, key, id);
     }
 
@@ -76,4 +76,5 @@ public class ScheduleUseCase implements RetrofitOnSuccess, ScheduleOnSuccess {
             scheduleAlarmListPopupActivity.clickSuccess(list);
         }
     }
+
 }

@@ -21,7 +21,9 @@ public class ScheduleAlarmDeletePopupActivity extends Activity {
         cancel = findViewById(R.id.schedule_alarmdelete_popup_cancel);
         delete = findViewById(R.id.schedule_alarmdelete_popup_delete);
         delete.setOnClickListener((view) ->{
-            //
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
         });
         cancel.setOnClickListener((view) ->{
             finish();
