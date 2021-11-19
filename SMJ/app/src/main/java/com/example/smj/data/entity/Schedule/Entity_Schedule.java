@@ -26,20 +26,26 @@ public interface Entity_Schedule {
             @Header("Authorization")String token,
             @Body AlarmPostData post
     );
-    @PUT("api/alarms/{id}")
+    @PUT("api/alarms/{alarm_id}")
     Call<Alarm> putAlarm(
             @Header("Authorization")String token,
-            @Body Alarm put,
-            @Path("id")String id
+            @Body AlarmPostData put,
+            @Path("alarm_id")String id
     );
-    @DELETE("api/alarms/{id}")
+    @DELETE("api/alarms/{alarm_id}")
     Call<Void> deleteAlarm(
             @Header("Authorization")String token,
-            @Path("id")String id
+            @Path("alarm_id")String id
     );
-    @GET("api/alarms/{startDate}")
+    @GET("api/alarms/startDate/{startDate}")
     Call<List<Alarm>> getDateAlarm(
             @Header("Authorization")String token,
             @Path("startDate")String startDate
     );
+    @GET("api/alarms/id/{id}")
+    Call<Alarm> getIdAlarm(
+            @Header("Authorization")String token,
+            @Path("id")String id
+    );
+
 }

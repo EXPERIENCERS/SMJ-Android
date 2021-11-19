@@ -1,5 +1,6 @@
 package com.example.smj.ui.Alarms;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,35 +54,40 @@ public class ScheduleAlarmListAdapter extends RecyclerView.Adapter<ScheduleAlarm
     @Override
     public void onBindViewHolder(@NonNull ScheduleAlarmListAdapter.MainHolder mainHolder, int i) {
         mainHolder.title.setText(getList.get(i).getTitle());
-        String strArr[] =  getList.get(i).getStartTime().split(":");
+        String strArr[] = getList.get(i).getStartTime().split(":");
         StringBuilder sb = new StringBuilder();
-        if(Integer.parseInt(strArr[0]) < 12) sb.append("AM ");
+        if (Integer.parseInt(strArr[0]) < 12) sb.append("AM ");
         else sb.append("PM ");
         sb.append(strArr[0]).append(":").append(strArr[1]);
         mainHolder.date.setText(sb);
 
-        mainHolder.onOff.setChecked(Boolean.parseBoolean(SharedPreferenceManager.getSharedPreference(mainHolder.view.getContext(),mainHolder.title.getText().toString())));
+        mainHolder.onOff.setChecked(Boolean.parseBoolean(SharedPreferenceManager.getSharedPreference(mainHolder.view.getContext(), mainHolder.title.getText().toString())));
         mainHolder.onOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    SharedPreferenceManager.putSharedPreference(mainHolder.view.getContext(),mainHolder.title.getText().toString(),"true");
+                if (isChecked) {
+                    SharedPreferenceManager.putSharedPreference(mainHolder.view.getContext(), mainHolder.title.getText().toString(), "true");
 
-                }
-                else {
-                    SharedPreferenceManager.putSharedPreference(mainHolder.view.getContext(),mainHolder.title.getText().toString(),"false");
+                } else {
+                    SharedPreferenceManager.putSharedPreference(mainHolder.view.getContext(), mainHolder.title.getText().toString(), "false");
                 }
             }
         });
+        mainHolder.view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int id = getList.get(i).getId();
+                String date = getList.get(i).getstartDate();
+                Intent intent = new Intent(v.getContext(), ScheduleAlarmPageActivity.class);
+                String[] alarmCreateData = {"2",date,String.valueOf(id)};
+                intent.putExtra("data", alarmCreateData);
+                v.getContext().startActivity(intent);
+            }
+        });
     }
-
     @Override
-
     public int getItemCount() {
         return getList.size();
     }
-
-
-
 
 }

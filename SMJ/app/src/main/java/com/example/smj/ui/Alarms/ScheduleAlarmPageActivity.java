@@ -17,17 +17,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.smj.Manager.JWTManager;
 import com.example.smj.R;
+import com.example.smj.callback.SchedulePageGetData;
 import com.example.smj.data.entity.Schedule.Alarm;
 import com.example.smj.domain.usecase.ScheduleUseCase;
 
-public class ScheduleAlarmPageActivity extends AppCompatActivity {
+public class ScheduleAlarmPageActivity extends AppCompatActivity implements SchedulePageGetData {
     private ViewGroup alarmDelete, alarmIter, timerClick1, timerClick2;
     private TextView subject,submitModified;
-    private TextView today, startTime,finishTime, repeat;
+    private TextView today, startTime,finishTime, repeat,delete;
     private EditText title, content;
     private TimePicker timePicker,timePicker2;
     private Boolean checkFocus1 = true, checkFocus2 = true, clickFlag = false ,clickFlag2 = false;
-    private String dateKey;
+    private String dateKey,id;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,18 +41,16 @@ public class ScheduleAlarmPageActivity extends AppCompatActivity {
                 Toast.makeText(this,"제목과 세부 내용을 입력하여 주십시오.", Toast.LENGTH_SHORT);
                 return;
             }
-            AlarmPostData alarm = new AlarmPostData(title.getText().toString(),content.getText().toString(),extractDate(),extractTime(startTime),extractTime(finishTime),extractRepeat());
-            ScheduleUseCase scheduleUseCase = new ScheduleUseCase(this);
-            //scheduleUseCase.sendData(alarm, JWTManager.getSharedPreference(this,getString(R.string.saved_JWT)));
             Intent intent = new Intent(this, ScheduleAlarmModifiedPopupActivity.class);
-            Log.d("rtgtg", title.getText().toString());
-            if(title.getText().toString().equals("알림 등록")){
+            if(subject.getText().toString().equals("알림 등록")){
                 intent.putExtra("data", "1");
+                startActivityForResult(intent, 2);
             }
             else{
                 intent.putExtra("data", "2");
+                startActivityForResult(intent, 5);
             }
-            startActivityForResult(intent, 1);
+
         });
         alarmIter.setOnClickListener((view) ->{
             Intent intent = new Intent(this, ScheduleAlarmIterPopupActivity.class);
@@ -61,7 +60,7 @@ public class ScheduleAlarmPageActivity extends AppCompatActivity {
         alarmDelete.setOnClickListener((view) ->{
             Intent intent = new Intent(this, ScheduleAlarmDeletePopupActivity.class);
             intent.putExtra("data", "Test Popup");
-            startActivityForResult(intent, 1);
+            startActivityForResult(intent, 3);
         });
     }
     protected void init(){
@@ -75,6 +74,7 @@ public class ScheduleAlarmPageActivity extends AppCompatActivity {
         startTime = findViewById(R.id.schedule_alarmpage_starttime);
         finishTime = findViewById(R.id.schedule_alarmpage_finishitime);
         repeat = findViewById(R.id.schedule_alarmpage_repeatcheck);
+        delete = findViewById(R.id.schedule_alarmpage_noticedelete);
         title.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -124,14 +124,34 @@ public class ScheduleAlarmPageActivity extends AppCompatActivity {
         }
         else{
             subject.setText("알림 수정");
+            submitModified.setText("수정");
+            id = data[2];
+            ScheduleUseCase scheduleUseCase = new ScheduleUseCase(this);
+            scheduleUseCase.sendIdDate(JWTManager.getSharedPreference(this,getString(R.string.saved_JWT)),id);
         }
         dateKey = data[1];
         today.setText(dateKey.replace("-","."));
+
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 4) {
+        if (requestCode == 2) {
+            if(resultCode == RESULT_OK){
+                AlarmPostData alarm = new AlarmPostData(title.getText().toString(),content.getText().toString(),extractDate(),extractTime(startTime),extractTime(finishTime),extractRepeat());
+                ScheduleUseCase scheduleUseCase = new ScheduleUseCase(this);
+                scheduleUseCase.sendData(alarm, JWTManager.getSharedPreference(this,getString(R.string.saved_JWT)));
+            }
+            finish();
+        }
+        else if (requestCode == 3) {
+            if(resultCode == RESULT_OK){
+                ScheduleUseCase scheduleUseCase = new ScheduleUseCase(this);
+                scheduleUseCase.deleteData(JWTManager.getSharedPreference(this,getString(R.string.saved_JWT)),id);
+            }
+            finish();
+        }
+        else if (requestCode == 4) {
             if(resultCode == RESULT_OK){
                 int s = data.getIntExtra("iter",0);
                 switch (s){
@@ -153,6 +173,15 @@ public class ScheduleAlarmPageActivity extends AppCompatActivity {
                 }
             }
         }
+        else if (requestCode == 5) {
+            if(resultCode == RESULT_OK){
+                AlarmPostData alarm = new AlarmPostData(title.getText().toString(),content.getText().toString(),extractDate(),extractTime(startTime),extractTime(finishTime),extractRepeat());
+                ScheduleUseCase scheduleUseCase = new ScheduleUseCase(this);
+                scheduleUseCase.changeData(alarm,JWTManager.getSharedPreference(this,getString(R.string.saved_JWT)),id);
+            }
+            finish();
+        }
+
     }
     public String extractDate(){
         return today.getText().toString().replace(".","-");
@@ -180,5 +209,37 @@ public class ScheduleAlarmPageActivity extends AppCompatActivity {
                 break;
         }
         return rString;
+    }
+    public String transformRepeat(String s){
+        String rString = "";
+        switch (s){
+            case "DAILY":
+                rString = "매일 반복";
+                break;
+            case "MONTHLY":
+                rString = "매달 반복";
+                break;
+            case "YEARLY":
+                rString = "매년 반복";
+                break;
+        }
+        return rString;
+    }
+    public  StringBuilder transformTime(String s){
+        String strArr[] = s.split(":");
+        StringBuilder sb = new StringBuilder();
+        if (Integer.parseInt(strArr[0]) < 12) sb.append("AM ");
+        else sb.append("PM ");
+        sb.append(strArr[0]).append(":").append(strArr[1]);
+        return sb;
+    }
+    @Override
+    public void retrieveSuccess(Alarm alarm) {
+          title.setText(alarm.getTitle());
+          content.setText(alarm.getContent());
+          today.setText(alarm.getstartDate().replace("-","."));
+          startTime.setText(transformTime(alarm.getStartTime()));
+          finishTime.setText(transformTime(alarm.getEndTime()));
+          repeat.setText(transformRepeat(alarm.getRepeat()));
     }
 }
